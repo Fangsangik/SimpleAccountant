@@ -5,7 +5,6 @@ import com.sample.account.domain.AccountStatus;
 import com.sample.account.repository.AccountRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,6 +25,10 @@ public class AccountService {
 
     @Transactional
     public Account getAccount(Long id){
+        if (id < 0) {
+            throw new RuntimeException("Minus");
+        }
+
        return repository.findById(id).get();
     }
 }

@@ -1,7 +1,7 @@
 package com.sample.account.controller;
 
 import com.sample.account.domain.Account;
-import com.sample.account.domain.AccountStatus;
+import com.sample.account.type.AccountStatus;
 import com.sample.account.service.AccountService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,8 @@
 package com.sample.account.service;
 
 import com.sample.account.domain.Account;
-import com.sample.account.domain.AccountStatus;
+import com.sample.account.type.AccountStatus;
 import com.sample.account.repository.AccountRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,10 +31,10 @@ class AccountServiceTest {
     @InjectMocks
     private AccountService service;
 
-    @BeforeEach
-    public void before() {
-        service.createAccount();
-    }
+//    @BeforeEach
+//    public void before() {
+//        service.createAccount();
+//    }
 
     @Test
     @DisplayName("계좌 조회 성공")

@@ -2,22 +2,24 @@ package com.sample.account.controller;
 
 import com.sample.account.domain.Account;
 import com.sample.account.service.AccountService;
-import com.sample.account.service.RedisServiceTest;
+import dto.CreateAccount;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 public class AccountController {
 
     private final AccountService service;
-    @GetMapping("/create-account")
-    public String createAccount(){
-        service.createAccount();
+    @PostMapping("/account")
+    public CreateAccount.Response createAccount(
+            @RequestBody @Valid CreateAccount.Request request
+            ) {
+        service.createAccount(request.getUserId(),
+                request.getInitialBalance());
 
-        return "success";
+        return;
     }
 
     @GetMapping("/account/{id}")

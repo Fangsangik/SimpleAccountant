@@ -10,7 +10,9 @@ public class CreateAccount {
 
     @Getter
     @Setter
+    @AllArgsConstructor
     public static class Request {
+        //Valid를 명확하게 하기 위해서 사용
         @NotNull
         @Min(1)
         private Long userId;
@@ -30,5 +32,15 @@ public class CreateAccount {
         private Long userId;
         private String accountNumber;
         private LocalDateTime registeredAt;
+
+        //AccountDto -> createAccountResponse로 손쉽게 변경이 가능
+        public static Response from(AccountDto accountDto) {
+            return Response.builder()
+                    .userId(accountDto.getUserId())
+                    .accountNumber(accountDto.getAccountNumber())
+                    .registeredAt(accountDto.getRegisteredAt())
+                    .registeredAt(accountDto.getUnRegisteredAt())
+                    .build();
+        }
     }
 }

@@ -16,10 +16,10 @@ public class AccountController {
     public CreateAccount.Response createAccount(
             @RequestBody @Valid CreateAccount.Request request
             ) {
-        service.createAccount(request.getUserId(),
-                request.getInitialBalance());
 
-        return;
+        return CreateAccount.Response.from(service.createAccount(
+                request.getUserId(),
+                request.getInitialBalance()));
     }
 
     @GetMapping("/account/{id}")

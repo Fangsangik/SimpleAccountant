@@ -7,6 +7,7 @@ import com.sample.account.repository.AccountRepository;
 import com.sample.account.repository.AccountUserRepository;
 import com.sample.account.type.AccountStatus;
 import com.sample.account.type.ErrorCode;
+import dto.AccountDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,15 +28,21 @@ public class AccountService {
      * 계좌를 저장하고 그 정보를 넘긴다.
      */
     @Transactional
-    public Account createAccount(Long userId, Long initialBalance) {
+    public AccountDto createAccount(Long userId, Long initialBalance) {
         AccountUser accountUser = accountUserRepository.findById(userId)
                 .orElseThrow(() -> new AccountException(ErrorCode.USER_NOT_FOUND));
+
+        validateCreateAccount(accountUser);
 
         String newAccountNumber = accountUserRepository.findFirstByOrderByIdDesc()
                 .map(account -> (Integer.parseInt(account.getAccountNumber())) + 1 + "")
                 .orElse("100000000");
 
-        Account savedAccount = repository.save(Account
+        //한번만 쓰는 변수는 크게 의미가 없다.
+        //호불호가 있을 수 있지만 중간에 로직이 들어갈 경우도 있기에 나중에 혼란 스럽다.
+        return AccountDto.fromEntity(
+                repository.save
+                (Account
                 .builder()
                 .accountUser(accountUser)
                 .accountStatus(AccountStatus.In_USER)
@@ -43,9 +50,13 @@ public class AccountService {
                 .balance(initialBalance)
                 .registeredAt(LocalDateTime.now())
                 .build()
-        );
+        ));
+    }
 
-        return savedAccount;
+    private void validateCreateAccount(AccountUser accountUser) {
+        if (repository.countByAccountUser(accountUser) >= 10){
+            throw new AccountException(ErrorCode.MAX_ACCOUNT_PER_USER_10);
+        }
     }
 
     @Transactional

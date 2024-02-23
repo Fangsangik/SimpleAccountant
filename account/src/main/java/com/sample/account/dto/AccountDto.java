@@ -1,4 +1,4 @@
-package dto;
+package com.sample.account.dto;
 
 import com.sample.account.domain.Account;
 import lombok.*;
@@ -29,6 +29,7 @@ public class AccountDto {
         return AccountDto.builder()
                 .userId(account.getAccountUser().getId())
                 .accountNumber(account.getAccountNumber())
+                .balance(account.getBalance())
                 .registeredAt(account.getRegisteredAt())
                 .unRegisteredAt(account.getUnregisteredAt())
                 .build();

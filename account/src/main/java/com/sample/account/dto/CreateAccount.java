@@ -1,4 +1,4 @@
-package dto;
+package com.sample.account.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -18,7 +18,7 @@ public class CreateAccount {
         private Long userId;
 
         @NotNull
-        @Min(100)
+        @Min(0)
         private Long initialBalance;
     }
 

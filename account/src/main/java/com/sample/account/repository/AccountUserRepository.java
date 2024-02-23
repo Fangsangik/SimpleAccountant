@@ -9,5 +9,4 @@ import java.util.Optional;
 
 @Repository
 public interface AccountUserRepository extends JpaRepository<AccountUser, Long> {
-    Optional<Account> findFirstByOrderByIdDesc();
 }

@@ -1,6 +1,8 @@
 package com.sample.account.domain;
 
+import com.sample.account.exception.AccountException;
 import com.sample.account.type.AccountStatus;
+import com.sample.account.type.ErrorCode;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -43,5 +45,21 @@ public class Account {
     //enum은 실제로는 0,1,2,3 ->
     //Enumerated -> String 실제 이름을 DB에 저장
     private AccountStatus accountStatus;
+
+    public void useBalance(Long amount){
+        if (amount > balance){
+            throw  new AccountException(ErrorCode.AMOUNT_EXCEED_BALANCE);
+        } else {
+            balance -= amount;
+        }
+    }
+
+    public void cancelBalance(Long amount){
+        if (amount < 0){
+            throw  new AccountException(ErrorCode.INVALID_REQUEST);
+        } else {
+            balance += amount;
+        }
+    }
 
 }

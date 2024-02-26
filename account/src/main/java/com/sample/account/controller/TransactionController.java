@@ -1,5 +1,6 @@
 package com.sample.account.controller;
 
+import com.sample.account.aop.AccountLock;
 import com.sample.account.dto.CancelBalance;
 import com.sample.account.dto.QueryTransactionResponse;
 import com.sample.account.dto.UseBalance;
@@ -25,11 +26,13 @@ public class TransactionController {
     private final TransactionService transactionService;
 
     @PostMapping("/trasacntion/use")
+    @AccountLock
     public UseBalance.Response useBalance(
             @Valid @RequestBody UseBalance.Request request
-    ) {
+    ) throws InterruptedException {
 
         try {
+            Thread.sleep(5000L);
             return UseBalance.Response.from(
                     transactionService.useBalance(
                             request.getUserId(),
@@ -48,6 +51,7 @@ public class TransactionController {
     }
 
     @PostMapping("/transaction/cancel")
+    @AccountLock
     public CancelBalance.Response cancelBalance(
             @Valid @RequestBody CancelBalance.Request request
     ) {
@@ -71,6 +75,7 @@ public class TransactionController {
     }
 
     @GetMapping("/transaction/{transactionId}")
+    @AccountLock
     public QueryTransactionResponse queryTransaction(
              @PathVariable String transactionId
     ){

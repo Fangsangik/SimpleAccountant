@@ -18,11 +18,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Account {
-
-    @Id //pk 설정
-    @GeneratedValue
-    private Long id;
+public class Account extends BaseEntity{
 
     @ManyToOne
     private AccountUser accountUser;
@@ -31,14 +27,6 @@ public class Account {
 
     private LocalDateTime registeredAt;
     private LocalDateTime unregisteredAt;
-
-    @CreatedDate
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
-
-
     private String accountNumber;
 
     @Enumerated(EnumType.STRING)
